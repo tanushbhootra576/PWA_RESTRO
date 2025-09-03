@@ -1,59 +1,110 @@
-import React from 'react';
-import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
-import './Cart.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+import { useCart } from "../context/CartContext";
+import "./Cart.css";
 
 const Cart = () => {
-    const { cart, dispatch } = useCart();
-    const total = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const { state, dispatch } = useCart();
+    const navigate = useNavigate();
+
+    const handleIncrement = (item) => {
+        dispatch({ type: "INCREMENT", payload: item });
+    };
+
+    const handleDecrement = (item) => {
+        dispatch({ type: "DECREMENT", payload: item });
+    };
+
+    const handleRemove = (item) => {
+        dispatch({ type: "REMOVE", payload: item });
+    };
+
+    const handleClearCart = () => {
+        dispatch({ type: "CLEAR_CART" });
+    };
+
+    const calculateTotal = () => {
+        return state.items.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
 
     return (
         <>
             <Navbar />
             <div className="cart-container">
-                <h2 className="cart-title">Your Shopping Cart</h2>
+                <h1>Your Cart</h1>
 
-                {cart.items.length === 0 ? (
+                {state.items.length === 0 ? (
                     <div className="empty-cart">
-                        <p>Your cart is empty.</p>
-                        <Link to="/menu" className="back-btn">Browse Menu</Link>
+                        <div className="empty-cart-icon">🛒</div>
+                        <h2>Your cart is empty</h2>
+                        <p>Looks like you haven't added any items to your cart yet.</p>
+                        <button onClick={() => navigate("/menu")} className="browse-menu-btn">
+                            Browse Menu
+                        </button>
                     </div>
                 ) : (
-                    <>
-                        <ul className="cart-list">
-                            {cart.items.map((item) => (
-                                <li key={item.name} className="cart-item">
-                                    <img src={item.image} alt={item.name} className="cart-img" />
-                                    <div className="cart-info">
-                                        <div className="cart-name">{item.name}</div>
-                                        <div className="cart-meta">
-                                            ₹{item.price} × {item.qty}
-                                        </div>
+                    <div className="cart-content">
+                        <div className="cart-items">
+                            {state.items.map((item) => (
+                                <div key={item.id} className="cart-item">
+                                    <div className="item-image">
+                                        <img src={item.image || "/images/default-food.png"} alt={item.name} />
                                     </div>
-                                    <button
-                                        onClick={() => dispatch({ type: 'REMOVE_FROM_CART', payload: item })}
-                                        className="remove-btn"
-                                    >
-                                        Remove
-                                    </button>
-                                </li>
+                                    <div className="item-details">
+                                        <h3>{item.name}</h3>
+                                        <p className="item-price">₹{item.price}</p>
+                                    </div>
+                                    <div className="item-actions">
+                                        <div className="quantity-controls">
+                                            <button onClick={() => handleDecrement(item)} className="qty-btn">
+                                                -
+                                            </button>
+                                            <span className="quantity">{item.quantity}</span>
+                                            <button onClick={() => handleIncrement(item)} className="qty-btn">
+                                                +
+                                            </button>
+                                        </div>
+                                        <button onClick={() => handleRemove(item)} className="remove-btn">
+                                            Remove
+                                        </button>
+                                    </div>
+                                    <div className="item-total">
+                                        <p>₹{(item.price * item.quantity).toFixed(2)}</p>
+                                    </div>
+                                </div>
                             ))}
-                        </ul>
-
+                        </div>
                         <div className="cart-summary">
-                            <div className="cart-total">
-                                <span>Total:</span>
-                                <strong>₹{total}</strong>
+                            <h2>Order Summary</h2>
+                            <div className="summary-details">
+                                <div className="summary-row">
+                                    <span>Subtotal</span>
+                                    <span>₹{calculateTotal().toFixed(2)}</span>
+                                </div>
+                                <div className="summary-row">
+                                    <span>Tax (12%)</span>
+                                    <span>₹{(calculateTotal() * 0.12).toFixed(2)}</span>
+                                </div>
+                                <div className="summary-row">
+                                    <span>Delivery</span>
+                                    <span>₹40.00</span>
+                                </div>
+                                <div className="summary-total">
+                                    <span>Total</span>
+                                    <span>₹{(calculateTotal() + calculateTotal() * 0.12 + 40).toFixed(2)}</span>
+                                </div>
                             </div>
                             <div className="cart-actions">
-                                <button className="checkout-btn">Proceed to Checkout</button>
-                                <Link to="/menu" className="continue-link">
-                                    Continue Shopping
-                                </Link>
+                                <button onClick={handleClearCart} className="clear-cart-btn">
+                                    Clear Cart
+                                </button>
+                                <button onClick={() => navigate("/checkout")} className="checkout-btn">
+                                    Proceed to Checkout
+                                </button>
                             </div>
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         </>

@@ -66,4 +66,4 @@
 
    Feel free to fork this project, make enhancements, and open pull requests!
 
-   ### ✨ Developed by Tanush Bhootra
+   ###  Developed by Tanush Bhootra

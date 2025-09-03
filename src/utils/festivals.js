@@ -52,3 +52,54 @@ export const FESTIVALS_BY_YEAR = {
         { name: 'Chhath Puja', month: 11, day: 13 }
     ]
 };
+
+export const festivals = [
+    {
+        name: "Diwali",
+        date: "YYYY-10-31" // Will replace YYYY with current year
+    },
+    {
+        name: "Christmas",
+        date: "YYYY-12-25"
+    },
+    {
+        name: "Holi",
+        date: "YYYY-03-25"
+    },
+    {
+        name: "New Year",
+        date: "YYYY-01-01"
+    },
+    {
+        name: "Dussehra",
+        date: "YYYY-10-12"
+    },
+    {
+        name: "Raksha Bandhan",
+        date: "YYYY-08-19"
+    },
+    {
+        name: "Independence Day",
+        date: "YYYY-08-15"
+    },
+    {
+        name: "Republic Day",
+        date: "YYYY-01-26"
+    },
+    {
+        name: "Ganesh Chaturthi",
+        date: "YYYY-09-07"
+    },
+    {
+        name: "Navratri",
+        date: "YYYY-10-03"
+    },
+    {
+        name: "Eid",
+        date: "YYYY-04-10"
+    },
+    {
+        name: "Guru Nanak Jayanti",
+        date: "YYYY-11-15"
+    }
+];

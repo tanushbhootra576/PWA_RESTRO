@@ -1,0 +1,70 @@
+.update-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    max-width: 320px;
+    animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.update-notification-content {
+    padding: 16px 20px;
+}
+
+.update-notification h3 {
+    margin: 0 0 8px 0;
+    color: #0f172a;
+    font-size: 18px;
+}
+
+.update-notification p {
+    margin: 0 0 16px 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.update-notification button {
+    background-color: #f97316;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.update-notification button:hover {
+    background-color: #ea580c;
+}
+
+.update-notification button.secondary {
+    background-color: #e2e8f0;
+    color: #475569;
+    margin-left: 8px;
+}
+
+.update-notification button.secondary:hover {
+    background-color: #cbd5e1;
+}
+
+.update-actions {
+    display: flex;
+    justify-content: flex-end;
+}
